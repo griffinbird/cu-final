@@ -23,9 +23,14 @@ namespace ContosoUniversity
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+        string connString;
+        if (Environment.GetEnvironmentVariable("DBConnString")!=null) {
+            connString = Environment.GetEnvironmentVariable("DBConnString");
+        } else {
+            connString = Configuration.GetConnectionString("DefaultConnection");
+        }
             services.AddDbContext<SchoolContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
+                options.UseSqlServer(connString));
             services.AddMvc();
         }
 
