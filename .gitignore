@@ -1,0 +1,6 @@
+.vscode
+.vs
+.bowerrc
+bower_components/
+bin/
+obj/

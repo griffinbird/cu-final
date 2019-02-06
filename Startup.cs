@@ -23,9 +23,15 @@ namespace ContosoUniversity
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+        string dbHost = Environment.GetEnvironmentVariable("DATABASE_SERVICE_HOST");
+        string dbDatabase = Environment.GetEnvironmentVariable("MSSQL_DATABASE");
+        string dbUser = Environment.GetEnvironmentVariable("MSSQL_USER");
+        string dbPassword = Environment.GetEnvironmentVariable("MSSQL_PASSWORD");
+        string dbConnString = Environment.GetEnvironmentVariable("MSSQL_CONN");
+        //string dbConnString = $"Server={dbHost};Database={dbDatabase};User Id={dbUser};Password={dbPassword}";
         string connString;
-        if (Environment.GetEnvironmentVariable("DBConnString")!=null) {
-            connString = Environment.GetEnvironmentVariable("DBConnString");
+        if ( dbConnString !=null) {
+            connString = dbConnString;
         } else {
             connString = Configuration.GetConnectionString("DefaultConnection");
         }

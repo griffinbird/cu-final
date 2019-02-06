@@ -1,0 +1,31 @@
+apiVersion: "v1"
+kind: "Pod"
+metadata:
+  name: "mssql"
+  labels:
+    name: "mssql"
+spec:
+  containers:
+    -
+      name: "mssql-server-linux"
+      image: "microsoft/mssql-server-linux"
+      ports:
+        -
+          containerPort: 1433
+          name: "mssql-server"
+      env:
+        - name: ACCEPT_EULA
+          value: >-
+                Y
+        - name: SA_PASSWORD
+          value: >-
+                Strong!Passw0rd
+      volumeMounts:
+        -
+          mountPath: "/var/opt/mssql"
+          name: "pvol"
+  volumes:
+    -
+      name: "pvol"
+      persistentVolumeClaim:
+        claimName: "claim2"
