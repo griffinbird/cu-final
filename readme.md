@@ -1,3 +1,22 @@
+# Get up and running
+Set the Environment Variables which points to that database and build and run the code against it:
+
+```
+DATABASE_SERVICE_HOST=127.0.0.1
+export DATABASE_SERVICE_HOST
+MSSQL_DATABASE=mydatabase
+export MSSQL_DATABASE
+MSSQL_USER=sa
+export MSSQL_USER
+MSSQL_PASSWORD="StrongPassw0rd"
+export MSSQL_PASSWORD
+dotnet restore
+dotnet run
+```
+## Docker (usin docker hub)
+``` docker run --name cu-final -P -d wiziah/cu-final ```
+
+
 # Contoso University sample app
 
 Contoso University demonstrates how to use Entity Framework Core in an
