@@ -1,3 +1,19 @@
+- sqllocal db start
+- dotnet ef database update
+- source ./SqlServerEnv.sh
+- dotnet run
+
+
+
+docker run --rm -e DATABASE_SERVICE_HOST=172.20.10.2 -e MSSQL_DATABASE=mydatabase -e MSSQL_USER=sa -e
+MSSQL_PASSWORD="StrongPassw0rd" -p 7616:80 wiziah/cu-final:latest --name cu-final
+
+sqllocaldb stop
+
+docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=StrongPassw0rd' -p 1433:1433 --name ms-sql -d mcr.microsoft.com/mssql/server:2017-latest
+
+
+
 # Get up and running
 Set the Environment Variables which points to that database and build and run the code against it:
 

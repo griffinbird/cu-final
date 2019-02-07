@@ -27,8 +27,8 @@ namespace ContosoUniversity
         string dbDatabase = Environment.GetEnvironmentVariable("MSSQL_DATABASE");
         string dbUser = Environment.GetEnvironmentVariable("MSSQL_USER");
         string dbPassword = Environment.GetEnvironmentVariable("MSSQL_PASSWORD");
-        string dbConnString = Environment.GetEnvironmentVariable("MSSQL_CONN");
-        //string dbConnString = $"Server={dbHost};Database={dbDatabase};User Id={dbUser};Password={dbPassword}";
+        //string dbConnString = Environment.GetEnvironmentVariable("MSSQL_CONN");
+        string dbConnString = $"Server={dbHost};Database={dbDatabase};User Id={dbUser};Password={dbPassword}";
         string connString;
         if ( dbConnString !=null) {
             connString = dbConnString;
