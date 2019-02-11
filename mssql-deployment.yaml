@@ -1,0 +1,61 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: mssql-linux-db
+  labels:
+    tier: back-end
+spec:
+  replicas: 1
+  strategy:
+    type: "RollingUpdate"
+  selector:
+    matchLabels:
+      app: mssql-linux-db
+  template:
+    metadata:
+      labels:
+        app: mssql-linux-db
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: mssql-linux
+        image: mcr.microsoft.com/mssql/server:2017-latest
+        resources:
+          limits:
+            cpu: "1"
+            memory: "920Mi"
+          requests:
+            cpu: "0.5"
+            memory: "880Mi"
+        ports:
+        - containerPort: 1433
+        env:
+        - name: MSSQL_PID
+          value: "Developer"
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: SA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mssql-pass
+              key: SA_PASSWORD 
+        volumeMounts:
+        - name: mssql-server-linux
+          mountPath: /var/opt/mssql
+      volumes:
+      - name: mssql-server-linux
+        persistentVolumeClaim:
+          claimName: mssql-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mssql-linux-db-svc
+spec:
+  selector:
+    app: mssql-linux-db
+  ports:
+    - protocol: TCP
+      port: 1433 #abstracted Service port, which can be any port other pods use to access the Service
+      targetPort: 1433 #pod accepts traffic on
+#  type: LoadBalancer

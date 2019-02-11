@@ -7,6 +7,7 @@ WORKDIR /app
 COPY *.csproj .
 RUN dotnet restore
 
+#r44t
 COPY . .
 RUN dotnet publish --output /app/ --configuration Release
 RUN sed -n 's:.*<AssemblyName>\(.*\)</AssemblyName>.*:\1:p' *.csproj > __assemblyname

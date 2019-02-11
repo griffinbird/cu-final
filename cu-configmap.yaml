@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cu-configmap
+data:
+  DATABASE_SERVICE_HOST: "mssql-server-linux"
+  MSSQL_DATABASE: "mydatabase"
+  MSSQL_USER: "sa"

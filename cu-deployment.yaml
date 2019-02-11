@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: contoso-uni-app
+  labels:
+    tier: front-end
+spec:
+  replicas: 1
+  strategy:
+    type: "RollingUpdate"
+  selector:
+    matchLabels:
+      app: contoso-uni
+  template:
+    metadata:
+      labels:
+        app: contoso-uni
+    spec:
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      imagePullSecrets:
+        - name: cu-acr-pass
+      containers:
+        - name: contoso-uni
+          image: bennyau.azurecr.io/cu-final:latest
+          imagePullPolicy: Always
+          ports:
+          - name: http
+            containerPort: 80
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: "200Mi"
+            requests:
+              cpu: "0.5"
+              memory: "100Mi"
+          env:
+          - name: DATABASE_SERVICE_HOST
+            value: "mssql-linux-db-svc"
+          - name: MSSQL_DATABASE
+            value: "mydatabase"
+          - name: MSSQL_USER
+            value: "sa"
+          - name: MSSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mssql-pass
+                key: SA_PASSWORD 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: contoso-uni-app-svc
+  labels:
+   name: contoso-uni-app-svc
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+      name: http
+  selector:
+    app: contoso-uni
+  type: LoadBalancer

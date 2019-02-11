@@ -6,9 +6,8 @@ spec:
   selector:                  
     name: mssql-server-linux
   ports:
- # - #nodePort: 0
    - 
     port: 1433               
     protocol: TCP
     targetPort: 1433
-  type: LoadBalancer        
+#  type: LoadBalancer        

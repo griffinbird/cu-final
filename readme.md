@@ -3,15 +3,15 @@
 - source ./SqlServerEnv.sh
 - dotnet run
 
-
-
-docker run --rm -e DATABASE_SERVICE_HOST=172.20.10.2 -e MSSQL_DATABASE=mydatabase -e MSSQL_USER=sa -e
-MSSQL_PASSWORD="StrongPassw0rd" -p 7616:80 wiziah/cu-final:latest --name cu-final
+docker run --rm -e DATABASE_SERVICE_HOST=172.20.10.2 -e MSSQL_DATABASE=mydatabase -e MSSQL_USER=sa -e MSSQL_PASSWORD="StrongPassw0rd" -p 7616:80 wiziah/cu-final:latest --name cu-final
 
 sqllocaldb stop
 
 docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=StrongPassw0rd' -p 1433:1433 --name ms-sql -d mcr.microsoft.com/mssql/server:2017-latest
 
+kubectl create secret generic mssql-pass --from-literal=SA_PASSWORD="StrongPassw0rd"
+
+kubectl port-forward svc/mssql-linux-db-svc 1433:1433
 
 
 # Get up and running
