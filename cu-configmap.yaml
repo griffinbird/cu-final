@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: cu-configmap
 data:
-  DATABASE_SERVICE_HOST: "mssql-server-linux"
+  DATABASE_SERVICE_HOST: "mssql-linux-db-svc"
   MSSQL_DATABASE: "mydatabase"
   MSSQL_USER: "sa"

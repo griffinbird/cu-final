@@ -39,11 +39,20 @@ spec:
               memory: "100Mi"
           env:
           - name: DATABASE_SERVICE_HOST
-            value: "mssql-linux-db-svc"
+            valueFrom:
+              configMapKeyRef:
+                name: cu-configmap
+                key: DATABASE_SERVICE_HOST 
           - name: MSSQL_DATABASE
-            value: "mydatabase"
-          - name: MSSQL_USER
-            value: "sa"
+            valueFrom:
+              configMapKeyRef:
+                name: cu-configmap
+                key: MSSQL_DATABASE
+          - name: MSSQL_USER  
+            valueFrom:
+              configMapKeyRef:
+                name: cu-configmap
+                key: MSSQL_USER
           - name: MSSQL_PASSWORD
             valueFrom:
               secretKeyRef:
